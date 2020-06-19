@@ -1,9 +1,23 @@
 const express = require('express');
+const categoriesMock = require('../../../utils/mocks/categories')
 
-const router = express.Router();
+function categoriesApi(app) {
+    const router = express.Router();
 
-router.get('/', function (req, res) {
-  res.send('i am here categories');
-});
+    app.use('/api/categories', router);
 
-module.exports = router;
+    router.get('/', async function(req, res, next){
+        try {
+            const categories =  await Promise.resolve(categoriesMock);
+            res.status(200).json({
+                data: categories,
+                message: 'categories listed'
+            })
+        } catch (error) {
+            next(error);
+        }
+    });
+ 
+}
+
+module.exports = categoriesApi;
