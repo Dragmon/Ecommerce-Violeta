@@ -150,6 +150,4 @@ const products = [
     Stock: 14,
   }
 ];
-module.exports = {
- products
-}
+module.exports = products;

@@ -122,6 +122,4 @@ const subcategories = [
     Subcategory: 'Water - Aquafina Vitamin',
   },
 ];
-module.exports = {
-  subcategories,
-};
+module.exports = subcategories;

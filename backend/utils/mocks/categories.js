@@ -50,6 +50,4 @@ const categories = [
   { Id_Category: 49, Category: 'Table Cloth 144x90 White' },
   { Id_Category: 50, Category: 'Pepper - Chillies, Crushed' },
 ];
-module.exports = {
-    categories
-}
+module.exports = categories;
