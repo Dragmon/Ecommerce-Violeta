@@ -1,11 +1,15 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const { config } = require('./config/index');
+const categories = require('./api/components/categories/network')
+
 
 const app = express();
 
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
+app.use(bodyParser.json()); // Para datos tipo application/json
+
+//Routes categories
+app.use('/api/categories', categories);
 
 app.listen(config.port, function () {
   console.log(`App listening on the http://localhost:${config.port}`);
