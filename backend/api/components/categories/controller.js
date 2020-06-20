@@ -9,7 +9,7 @@ module.exports = function (injectedStore) {
   }
 
   function getAll(){
-      return store.getAll(TABLA);
+      return store.getAll(TABLA,['Id_Category', 'Category']);
   }
 
   function findId(id) {
