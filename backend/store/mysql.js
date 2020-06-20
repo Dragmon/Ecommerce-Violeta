@@ -33,7 +33,7 @@ function handleConnection(){
 handleConnection();
 
 function getAll(table, fields) {
-    const field = fields ? fields.join() : '*';
+    let field =  formatFields(fields);
     return new Promise((resolve, reject) => {
         const sql = `SELECT ${field} FROM ${table} WHERE ${table}.Delete=0`;
         connection.query(sql, (err, data) => {
@@ -44,6 +44,49 @@ function getAll(table, fields) {
         });
     });
 }
+function findId(table, conditions, fields) {
+    const field = fields ? fields.join() : '*';
+    return new Promise((resolve, reject) => {
+        const sql = `SELECT ${field} FROM ${table} WHERE ${table}.Delete=0 ${createConditions(conditions)}`;
+        connection.query(sql, (err, data) => {
+            if (err) {
+                return reject(err)
+            }
+            resolve(data);
+        });
+    });
+}
+function createConditions(conditions){
+    if (conditions) {
+        let string = '';
+        Object.entries(conditions).forEach(([key, value]) => {
+            string += ` AND ${key}='${value}'`;
+        });
+        return string;
+    } else {
+        return '';
+    }
+}
+function formatFields(fields) {
+    if (fields) {
+        if (typeof fields === 'object') {
+            let field = '';
+            let i=0;
+            Object.entries(fields).forEach(([key, value]) => {
+                if (i){
+                    field += ',';
+                }
+                field += ` ${key} AS ${value}`;
+                i++;
+            })
+            return field;
+        } else if (Array.isArray(fields)) {
+            return fields.join();
+        }
+    }
+    return '*';
+}
 module.exports = {
-    getAll
+    getAll,
+    findId
 }

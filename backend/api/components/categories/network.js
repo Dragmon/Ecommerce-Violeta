@@ -8,7 +8,7 @@ function categoriesApi(app) {
     app.use('/api/categories', router);
     router.get('/', async function(req, res, next){
         try {
-            const categories = await Controller.getAll();
+            const categories = await Controller.getAll({Id_Category:'id', Category:'categoria'});
             res.status(200).json({
                 data: categories,
                 message: 'categories listed'
