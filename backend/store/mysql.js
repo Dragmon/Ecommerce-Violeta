@@ -56,6 +56,54 @@ function findId(table, conditions, fields) {
         });
     });
 }
+
+function insert(table, data) {
+    return new Promise((resolve, reject) => {
+        connection.query(`INSERT INTO ${table} SET ?`, data, (err, result) => {
+            if (err) {
+                return reject(err);
+            }
+            resolve(result);
+        });
+    })
+}
+
+function update(table, data, nameIdTable) {
+    return new Promise((resolve, reject) => {
+        connection.query(`UPDATE  ${table} SET ? WHERE ${nameIdTable}=?`, [data, data[nameIdTable]], (err, result) => {
+            if (err) {
+                return reject(err);
+            }
+            resolve(result);
+        });
+    })
+}
+function remove(table, data, nameIdTable) {
+    return new Promise((resolve, reject) => {
+        connection.query(`UPDATE  ${table} SET  ${table}.Delete=1 WHERE ${nameIdTable}=?`, data[nameIdTable], (err, result) => {
+            if (err) {
+                return reject(err);
+            }
+            resolve(result);
+        });
+    })
+}
+function upsert(table, data, nameIdTable) {
+    if (data && data[nameIdTable]) {
+        return update(table, data, nameIdTable);
+    } else {
+        return insert(table, data);
+    }
+}
+function query(table, query) {
+    return new Promise((resolve, reject) => {
+        connection.query(`SELECT * FROM ${table} WHERE ${table}.Delete=0 AND ?`, query, (err, res) => {
+            if (err) return reject(err);
+            resolve(res[0] || null);
+        })
+    })
+}
+
 function createConditions(conditions){
     if (conditions) {
         let string = '';
@@ -69,7 +117,7 @@ function createConditions(conditions){
 }
 function formatFields(fields) {
     if (fields) {
-        if (typeof fields === 'object') {
+        if (typeof fields === 'object' && !Array.isArray(fields)) {
             let field = '';
             let i=0;
             Object.entries(fields).forEach(([key, value]) => {
@@ -88,5 +136,8 @@ function formatFields(fields) {
 }
 module.exports = {
     getAll,
-    findId
+    findId,
+    upsert,
+    query,
+    remove,
 }
