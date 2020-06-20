@@ -1,14 +1,14 @@
 const express = require('express');
 const categoriesMock = require('../../../utils/mocks/categories')
+const Controller = require('./index');
 
 function categoriesApi(app) {
     const router = express.Router();
 
     app.use('/api/categories', router);
-
     router.get('/', async function(req, res, next){
         try {
-            const categories =  await Promise.resolve(categoriesMock);
+            const categories = await Controller.getAll();
             res.status(200).json({
                 data: categories,
                 message: 'categories listed'
@@ -20,7 +20,7 @@ function categoriesApi(app) {
 
     router.get('/:Id_Category', async function(req, res, next){
         try {
-            const categories = await Promise.resolve(categoriesMock[req.params.Id_Category]);
+            const categories = await Controller.findId(req.params.Id_Category);
             res.status(200).json({
                 data: categories,
                 message: 'category retrieve'
