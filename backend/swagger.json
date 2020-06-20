@@ -1,0 +1,267 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "API ecommerce",
+    "version": "1.0.0",
+    "title": "API ecommerce"
+  },
+  "host": "localhost:3000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "categorias",
+      "description": "Operaciones sobre categorias"
+    },
+    {
+      "name": "subcategorias",
+      "description": "Operaciones sobre subcategorias"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/categories": {
+      "get": {
+        "tags": [
+          "categorias"
+        ],
+        "summary": "Lista de las categorias",
+        "operationId": "listCategories",
+        "responses": {
+          "default": {
+            "description": "Lista de categorias"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "categorias"
+        ],
+        "summary": "Crea una categoria",
+        "description": "Crea una categoria en nuestra app",
+        "operationId": "createCategory",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Categoria creada",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/categories"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "categorias"
+        ],
+        "summary": "Actualiza una categoria",
+        "description": "Actualiza una categoria en nuestra app",
+        "operationId": "updateCategory",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Categoria actualizada",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/categories"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/categories/{Id_Category}": {
+      "get": {
+        "tags": [
+          "categorias"
+        ],
+        "summary": "Traer una categoria por id",
+        "operationId": "getCategories",
+        "parameters": [
+          {
+            "name": "Id_Category",
+            "in": "path",
+            "description": "Id de la categoria",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Registro solo de una categoria"
+          }
+        }
+      }
+    },
+    "/subcategories": {
+      "get": {
+        "tags": [
+          "subcategorias"
+        ],
+        "summary": "Lista de las subcategorias",
+        "operationId": "listSubcategories",
+        "responses": {
+          "default": {
+            "description": "Lista de subcategorias"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "subcategorias"
+        ],
+        "summary": "Crea una subcategoria",
+        "description": "Crea una subcategoria en nuestra app",
+        "operationId": "createSubcategory",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Subcategoria creada",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/subcategories"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "subcategorias"
+        ],
+        "summary": "Actualiza una subcategoria",
+        "description": "Actualiza una subcategoria en nuestra app",
+        "operationId": "updateSubcategory",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Subcategoria actualizada",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/categories"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/subcategories/{Id_Subcategory}": {
+      "get": {
+        "tags": [
+          "subcategorias"
+        ],
+        "summary": "Traer una subcategoria por id",
+        "operationId": "getSubcategories",
+        "parameters": [
+          {
+            "name": "Id_Subcategory",
+            "in": "path",
+            "description": "Id de la subcategoria",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Registro solo de una subcategoria"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:categories": "crear y modificar registros",
+        "read:categories": "leer los datos"
+      }
+    },
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "categories": {
+      "type": "object",
+      "properties": {
+        "Id_Category": {
+          "type": "number"
+        },
+        "Category": {
+          "type": "string"
+        }
+      }
+    },
+    "subcategories": {
+      "type": "object",
+      "properties": {
+        "Id_Subcategory": {
+          "type": "number"
+        },
+        "Fk_IdCategory": {
+          "type": "number"
+        },
+        "Subcategory": {
+          "type": "string"
+        }
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "type": "object"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
