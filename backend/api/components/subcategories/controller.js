@@ -14,15 +14,18 @@ module.exports = function(injectionStore) {
     }
     
     async function findId(id, fields) {
-        fields = fields ? fields : FIELDS;
-        return await store.findId(TABLA, { Id_Subcategory: id }, fields);
+      fields = fields ? fields : FIELDS;
+      return await store.findId(TABLA, { Id_Subcategory: id }, fields);
+    }
+    async function findByIdCategory(id, fields) {
+      fields = fields ? fields : FIELDS;
+      return await store.findId(TABLA, { Fk_IdCategory: id }, fields);
     }
     async function upsert(body) {
         if (body.Subcategory) {
           let subcategory = {
             Subcategory: body.Subcategory
           }
-          
           if (body.Fk_IdCategory) {
             subcategory.Fk_IdCategory= body.Fk_IdCategory;
           }
@@ -40,6 +43,7 @@ module.exports = function(injectionStore) {
         getAll,
         findId,
         upsert,
-        remove
+        remove,
+        findByIdCategory
     }
 }

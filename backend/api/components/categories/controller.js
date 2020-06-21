@@ -1,6 +1,6 @@
 const TABLA = 'categories';
 const NameIdTable = 'Id_Category';
-const FIELDS = ['Id_Category', 'Category'];
+const FIELDS = ['Id_Category', 'Category','Image'];
 
 module.exports = function (injectedStore) {
   let store = injectedStore;

@@ -28,6 +28,17 @@ function subcategoriesApi(app) {
             next(error);
         }
     });
+    router.get('/category/:Id_IdCategory', async function(req, res, next){
+        try {
+            const subcategories = await Controller.findByIdCategory(req.params.Id_IdCategory);
+            res.status(200).json({
+                data: subcategories,
+                message: 'subcategory retrieve'
+            })
+        } catch (error) {
+            next(error);
+        }
+    });
 
     router.post('/', async function(req, res, next){
         try {
