@@ -9,6 +9,7 @@ const categoriesApi = require('./api/components/categories/network')
 const subcategoriesApi = require('./api/components/subcategories/network');
 const countriesApi = require('./api/components/countries/network');
 const stateApi = require('./api/components/states/network');
+const citiesApi = require('./api/components/cities/network');
 
 const app = express();
 
@@ -22,6 +23,7 @@ categoriesApi(app);
 subcategoriesApi(app);
 countriesApi(app);
 stateApi(app);
+citiesApi(app);
 
 
 app.listen(config.port, function () {
