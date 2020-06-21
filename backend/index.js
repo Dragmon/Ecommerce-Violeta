@@ -8,6 +8,7 @@ const swaggerDoc = require('./swagger.json');
 const categoriesApi = require('./api/components/categories/network')
 const subcategoriesApi = require('./api/components/subcategories/network');
 const countriesApi = require('./api/components/countries/network');
+const stateApi = require('./api/components/states/network');
 
 const app = express();
 
@@ -20,6 +21,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 categoriesApi(app);
 subcategoriesApi(app);
 countriesApi(app);
+stateApi(app);
+
 
 app.listen(config.port, function () {
   console.log(`App listening on the http://localhost:${config.port}`);
