@@ -1,3 +1,6 @@
+'use strict';
+const dateFormat = require('dateformat');
+
 const TABLA = 'subcategories';
 const NameIdTable = 'Id_Subcategory';
 const FIELDS = ['Id_Subcategory', 'Subcategory'];
@@ -22,6 +25,7 @@ module.exports = function (injectionStore) {
     return await store.findId(TABLA, { Fk_IdCategory: id }, fields);
   }
   async function upsert(body) {
+    const date = dateFormat(new Date(), "yyyy-mm-dd h:MM:ss");
     if (body.Subcategory) {
       let subcategory = {
         Subcategory: body.Subcategory,
@@ -31,6 +35,9 @@ module.exports = function (injectionStore) {
       }
       if (body.Id_Subcategory) {
         subcategory.Id_Subcategory = body.Id_Subcategory;
+        subcategory.UpdateAt = date;
+      } else {
+        subcategory.CreatedAt = date;
       }
       return await store.upsert(TABLA, subcategory, NameIdTable);
     }

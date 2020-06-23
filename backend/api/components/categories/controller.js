@@ -1,3 +1,5 @@
+const dateFormat =  require('dateformat');
+
 const TABLA = 'categories';
 const NameIdTable = 'Id_Category';
 const FIELDS = ['Id_Category', 'Category', 'Image'];
@@ -19,6 +21,7 @@ module.exports = function (injectedStore) {
   }
 
   async function upsert(body) {
+    const date = dateFormat(new Date(), "yyyy-mm-dd h:MM:ss");
     if (body.Category) {
       let category = {
         Category: body.Category,
@@ -26,6 +29,9 @@ module.exports = function (injectedStore) {
 
       if (body.Id_Category) {
         category.Id_Category = body.Id_Category;
+        category.UpdateAt = date;
+      } else {
+        category.CreatedAt = date;
       }
       return await store.upsert(TABLA, category, NameIdTable);
     }
