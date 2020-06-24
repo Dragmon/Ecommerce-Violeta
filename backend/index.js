@@ -1,6 +1,5 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const { config } = require('./config/index');
+const { api } = require('./config/index');
 
 const swaggerUi = require('swagger-ui-express');
 
@@ -10,10 +9,12 @@ const subcategoriesApi = require('./api/components/subcategories/network');
 const countriesApi = require('./api/components/countries/network');
 const stateApi = require('./api/components/states/network');
 const citiesApi = require('./api/components/cities/network');
+const productsApi = require('./api/components/products/network');
+
 
 const app = express();
 
-app.use(bodyParser.json()); // Para datos tipo application/json
+app.use(express.json()); // Para datos tipo application/json
 
 
 //Route documentation
@@ -24,8 +25,8 @@ subcategoriesApi(app);
 countriesApi(app);
 stateApi(app);
 citiesApi(app);
+productsApi(app);
 
-
-app.listen(config.port, function () {
-  console.log(`App listening on the http://localhost:${config.port}`);
+app.listen(api.port, function () {
+  console.log(`App listening on the http://localhost:${api.port}`);
 });

@@ -1,15 +1,11 @@
 const mysql = require('mysql');
 
-const { config } = require('../config/index');
-const dbConfig = {
-  host: config.dbHost,
-  user: config.dbUser,
-  password: config.dbPassword,
-  database: config.dbName,
-};
+const { db } = require('../config/index');
+
+
 let connection;
 function handleConnection() {
-  connection = mysql.createConnection(dbConfig);
+  connection = mysql.createConnection({ ...db });
 
   connection.connect((err) => {
     if (err) {
